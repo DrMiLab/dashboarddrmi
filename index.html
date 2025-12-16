@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Professional Dashboard v2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #121212;
-            --card-bg: #1e1e1e;
-            --accent: #bb86fc;
-            --text-main: #e0e0e0;
-            --text-sec: #a0a0a0;
-            --highlight: #03dac6;
+            --bg-color: #0f172a; /* Dark Blue Slate */
+            --card-bg: #1e293b;
+            --text-main: #f1f5f9;
+            --text-sec: #94a3b8;
+            --accent: #38bdf8; /* Sky Blue */
+            --highlight: #818cf8; /* Indigo */
+            --success: #34d399;
+            --danger: #f87171;
+            --border: #334155;
         }
 
         body {
@@ -24,108 +28,158 @@
             display: flex;
             justify-content: center;
             min-height: 100vh;
+            box-sizing: border-box;
         }
 
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 20px;
+            padding-bottom: 40px;
         }
 
-        /* Header Section (Clock & Date) */
+        /* --- Header Section --- */
         .header-card {
             grid-column: 1 / -1;
-            background: linear-gradient(135deg, #1f1f1f, #252525);
-            padding: 30px;
-            border-radius: 15px;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            padding: 25px;
+            border-radius: 16px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            border: 1px solid #333;
-            transition: transform 0.3s ease;
-        }
-        
-        .header-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
+            border: 1px solid var(--border);
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        #time { font-size: 3.5rem; font-weight: 600; color: var(--accent); letter-spacing: 2px; }
-        #date { font-size: 1.2rem; color: var(--text-sec); margin-top: 5px; text-transform: uppercase; letter-spacing: 1px;}
+        #time { font-size: 4rem; font-weight: 700; color: var(--accent); line-height: 1; letter-spacing: -1px; }
+        #date { font-size: 1.2rem; color: var(--text-sec); margin-top: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;}
 
-        /* General Card Styling */
+        /* --- General Card Styling --- */
         .card {
             background-color: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            border: 1px solid #333;
-            transition: all 0.3s ease;
-            height: 350px; /* Fixed height for consistency */
-            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            height: 380px; 
             display: flex;
             flex-direction: column;
             position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .card:hover {
-            transform: translateY(-5px) scale(1.01);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
             border-color: var(--highlight);
         }
 
-        /* Interactive Scroll inside cards */
-        .card-content {
-            flex-grow: 1;
-            overflow-y: auto;
-            margin-top: 15px;
-            padding-right: 5px;
-        }
-
-        /* Scrollbar Styling */
-        .card-content::-webkit-scrollbar { width: 5px; }
-        .card-content::-webkit-scrollbar-track { background: #2a2a2a; }
-        .card-content::-webkit-scrollbar-thumb { background: #555; border-radius: 5px; }
-        .card-content::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-
         h2 {
-            margin: 0;
-            font-size: 1.2rem;
-            color: var(--highlight);
-            border-bottom: 2px solid #333;
-            padding-bottom: 10px;
+            margin: 0 0 15px 0;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 10px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        h2 i { color: var(--accent); }
+
+        .card-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 5px;
         }
 
-        /* List Items */
+        /* Scrollbar */
+        .card-content::-webkit-scrollbar { width: 6px; }
+        .card-content::-webkit-scrollbar-track { background: transparent; }
+        .card-content::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
+        .card-content::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        /* --- List Items --- */
         ul { list-style: none; padding: 0; margin: 0; }
+        
         li {
-            padding: 12px;
-            border-bottom: 1px solid #333;
+            padding: 14px 10px;
+            border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background 0.2s;
+            gap: 15px;
         }
-        li:hover { background-color: #2c2c2c; }
         li:last-child { border-bottom: none; }
 
-        .item-main { font-weight: 500; display: block; }
-        .item-sub { font-size: 0.85rem; color: var(--text-sec); display: block; margin-top: 4px; }
+        .info-col { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+        .meta-col { text-align: right; display: flex; flex-direction: column; gap: 4px; align-items: flex-end; min-width: 80px;}
+
+        .main-text { font-weight: 600; font-size: 0.95rem; color: #fff; }
+        .sub-text { font-size: 0.8rem; color: var(--text-sec); display: flex; align-items: center; gap: 6px; }
+        .sub-text i { font-size: 0.75rem; opacity: 0.8; }
+
         .badge {
-            background: #333;
-            padding: 4px 8px;
-            border-radius: 4px;
             font-size: 0.75rem;
-            color: var(--accent);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .badge-time { background: rgba(56, 189, 248, 0.15); color: var(--accent); }
+        .badge-date { background: rgba(148, 163, 184, 0.15); color: var(--text-sec); }
+
+        /* --- Todo Specific --- */
+        .todo-done .main-text { text-decoration: line-through; opacity: 0.5; }
+        .status-dot { height: 8px; width: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+
+        /* --- Quick Links Grid --- */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
         }
 
-        /* Loading State */
-        .loading { text-align: center; color: #555; padding-top: 50px; }
+        .link-btn {
+            background-color: #283445;
+            color: var(--text-main);
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            height: 80px;
+        }
 
+        .link-btn i { font-size: 1.2rem; color: var(--highlight); }
+
+        .link-btn:hover {
+            background-color: var(--highlight);
+            color: #fff;
+            border-color: var(--highlight);
+        }
+        .link-btn:hover i { color: #fff; }
+
+        .loading { text-align: center; color: var(--text-sec); padding-top: 60px; font-size: 0.9rem; }
+
+        /* Responsive Fixes */
+        @media (max-width: 600px) {
+            #time { font-size: 3rem; }
+            .container { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -133,143 +187,188 @@
     <div class="container">
         <div class="header-card">
             <div id="time">00:00:00</div>
-            <div id="date">DD/MM/YYYY</div>
+            <div id="date">--</div>
         </div>
 
         <div class="card">
-            <h2>📅 Meeting</h2>
+            <h2><i class="fa-solid fa-briefcase"></i> Meeting & Mesyuarat</h2>
             <div class="card-content" id="meeting-list">
-                <div class="loading">Memuatkan data...</div>
+                <div class="loading">Memuatkan...</div>
             </div>
         </div>
 
         <div class="card">
-            <h2>🎓 Jadual Kelas</h2>
+            <h2><i class="fa-solid fa-chalkboard-user"></i> Jadual Kelas</h2>
             <div class="card-content" id="kelas-list">
-                <div class="loading">Memuatkan data...</div>
+                <div class="loading">Memuatkan...</div>
             </div>
         </div>
 
         <div class="card">
-            <h2>✅ To-Do List</h2>
-            <div class="card-content" id="todo-list">
-                <div class="loading">Memuatkan data...</div>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>🏖️ Cuti Umum/Khas</h2>
+            <h2><i class="fa-solid fa-umbrella-beach"></i> Cuti & Pelepasan</h2>
             <div class="card-content" id="cuti-list">
-                <div class="loading">Memuatkan data...</div>
+                <div class="loading">Memuatkan...</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-list-check"></i> Senarai Tugas</h2>
+            <div class="card-content" id="todo-list">
+                <div class="loading">Memuatkan...</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-link"></i> Capaian Pantas</h2>
+            <div class="card-content">
+                <div id="links-list" class="links-grid">
+                    <div class="loading" style="grid-column: 1/-1;">Memuatkan...</div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         // --- KONFIGURASI ---
-        // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
-        const DATA_URL = "https://script.google.com/macros/s/AKfycbw2eSVXncF5vwi3HulkEu0MlisiRkx_lxAN5ngZ1Dco4ufbCm3cCjjvqfq7elXCTba7Mg/exec"; 
+        const DATA_URL = "GANTI_URL_APPS_SCRIPT_DISINI"; 
 
-        // 1. Digital Clock & Date Logic
+        // 1. Clock Logic
         function updateTime() {
             const now = new Date();
+            document.getElementById('time').textContent = now.toLocaleTimeString('en-US', { hour12: false });
             
-            // Time
-            const timeString = now.toLocaleTimeString('en-US', { hour12: false });
-            document.getElementById('time').textContent = timeString;
-
-            // Date (DD/MM/YYYY)
-            const day = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const year = now.getFullYear();
-            const days = ['Ahad', 'Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu'];
-            const dayName = days[now.getDay()];
-            
-            document.getElementById('date').textContent = `${dayName}, ${day}/${month}/${year}`;
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            // Format tarikh bahasa melayu
+            const dateStr = now.toLocaleDateString('ms-MY', options);
+            document.getElementById('date').textContent = dateStr;
         }
-
         setInterval(updateTime, 1000);
         updateTime();
 
-        // 2. Data Fetching Logic
+        // 2. Data Fetching
         async function fetchData() {
-            if(DATA_URL === "GANTI_URL_APPS_SCRIPT_DISINI") {
-                console.warn("Sila masukkan URL Apps Script anda.");
-                return;
-            }
-
+            if(DATA_URL.includes("GANTI")) return;
             try {
                 const response = await fetch(DATA_URL);
                 const data = await response.json();
                 renderDashboard(data);
             } catch (error) {
-                console.error("Gagal mengambil data:", error);
+                console.error("Error:", error);
             }
         }
 
-        // 3. Render Functions
+        // 3. Render Logic
         function renderDashboard(data) {
-            // Render Meetings
-            const meetingHTML = data.meeting.map(item => `
+            
+            // --- RENDER MEETING ---
+            // Input: Agenda, Tarikh, Masa, Lokasi
+            const meetingHTML = data.meeting.map(item => {
+                const dateObj = new Date(item.Tarikh);
+                const dayName = isNaN(dateObj) ? '' : dateObj.toLocaleDateString('ms-MY', { weekday: 'long' });
+                const dateFormatted = isNaN(dateObj) ? item.Tarikh : `${dateObj.getDate()}/${dateObj.getMonth()+1}`;
+
+                return `
                 <li>
-                    <div>
-                        <span class="item-main">${item.Agenda}</span>
+                    <div class="info-col">
+                        <span class="main-text">${item.Agenda}</span>
+                        <span class="sub-text"><i class="fa-solid fa-location-dot"></i> ${item.Lokasi || 'Online'}</span>
                     </div>
-                    <span class="badge">${formatTime(item.Masa)}</span>
+                    <div class="meta-col">
+                        <span class="badge badge-time">${formatTimeOnly(item.Masa)}</span>
+                        <span class="badge badge-date">${dateFormatted} (${dayName})</span>
+                    </div>
                 </li>
-            `).join('');
+            `}).join('');
             document.getElementById('meeting-list').innerHTML = `<ul>${meetingHTML}</ul>`;
 
-            // Render Kelas
+
+            // --- RENDER KELAS ---
+            // Input: Subjek, MasaMula, MasaTamat, Lokasi
             const kelasHTML = data.kelas.map(item => `
                 <li>
-                    <div>
-                        <span class="item-main">${item.Subjek}</span>
-                        <span class="item-sub">📍 ${item.Lokasi}</span>
+                    <div class="info-col">
+                        <span class="main-text">${item.Subjek}</span>
+                        <span class="sub-text"><i class="fa-solid fa-door-open"></i> ${item.Lokasi}</span>
                     </div>
-                    <span class="badge">${formatTime(item.Masa)}</span>
+                    <div class="meta-col">
+                        <span class="badge badge-time">
+                            ${formatTimeOnly(item.MasaMula)} - ${formatTimeOnly(item.MasaTamat)}
+                        </span>
+                    </div>
                 </li>
             `).join('');
             document.getElementById('kelas-list').innerHTML = `<ul>${kelasHTML}</ul>`;
 
-            // Render Todo
-            const todoHTML = data.todo.map(item => `
+
+            // --- RENDER CUTI ---
+            // Input: NamaCuti, TarikhMula, TarikhTamat
+            const cutiHTML = data.cuti.map(item => {
+                const start = formatDate(item.TarikhMula);
+                const end = formatDate(item.TarikhTamat);
+                const displayDate = (start === end) ? start : `${start} - ${end}`;
+
+                return `
                 <li>
-                    <span class="item-main" style="${item.Status === 'Done' ? 'text-decoration: line-through; opacity: 0.5' : ''}">${item.Tugasan}</span>
-                    <span class="badge" style="background:${item.Status === 'Done' ? '#03dac6' : '#cf6679'}; color: black">${item.Status}</span>
+                    <div class="info-col">
+                        <span class="main-text">${item.NamaCuti}</span>
+                    </div>
+                    <div class="meta-col">
+                        <span class="badge badge-date">${displayDate}</span>
+                    </div>
                 </li>
-            `).join('');
+            `}).join('');
+            document.getElementById('cuti-list').innerHTML = `<ul>${cutiHTML}</ul>`;
+
+
+            // --- RENDER TODO ---
+            const todoHTML = data.todo.map(item => {
+                const isDone = item.Status === 'Done';
+                return `
+                <li class="${isDone ? 'todo-done' : ''}">
+                    <div class="info-col">
+                        <span class="main-text">${item.Tugasan}</span>
+                    </div>
+                    <div class="meta-col">
+                        <span class="badge" style="background: ${isDone ? 'rgba(52, 211, 153, 0.2)' : 'rgba(248, 113, 113, 0.2)'}; color: ${isDone ? '#34d399' : '#f87171'}">
+                            ${item.Status}
+                        </span>
+                    </div>
+                </li>
+            `}).join('');
             document.getElementById('todo-list').innerHTML = `<ul>${todoHTML}</ul>`;
 
-            // Render Cuti
-            const cutiHTML = data.cuti.map(item => `
-                <li>
-                    <span class="item-main">${item.NamaCuti}</span>
-                    <span class="badge">${formatDate(item.Tarikh)}</span>
-                </li>
+
+            // --- RENDER QUICK LINKS ---
+            // Input: Tajuk, URL
+            const linksHTML = data.links.map(item => `
+                <a href="${item.URL}" target="_blank" class="link-btn">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    <span>${item.Tajuk}</span>
+                </a>
             `).join('');
-            document.getElementById('cuti-list').innerHTML = `<ul>${cutiHTML}</ul>`;
+            document.getElementById('links-list').innerHTML = linksHTML;
         }
 
-        // Helper: Format Google Sheet Date/Time strings properly
-        function formatTime(val) {
+        // --- Helper Functions ---
+        
+        // Convert "2023-10-25T02:00:00.000Z" to "10:00"
+        function formatTimeOnly(val) {
             if(!val) return "";
-            // Jika data datang sebagai full ISO date string
-            if(val.toString().includes("T")) {
+            if(val.toString().includes("T") || val instanceof Date) {
                 const d = new Date(val);
                 return d.toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit', hour12: false});
             }
             return val;
         }
 
+        // Convert date to DD/MM
         function formatDate(val) {
             if(!val) return "";
             const d = new Date(val);
-            if(isNaN(d.getTime())) return val; // return original if not date
+            if(isNaN(d.getTime())) return val;
             return `${d.getDate()}/${d.getMonth()+1}`;
         }
 
-        // Fetch data immediately, then every 30 seconds for auto-update
         fetchData();
         setInterval(fetchData, 30000); 
 
