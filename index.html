@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Dashboard v2</title>
+    <title>Professional Dashboard v3</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #0f172a; /* Dark Blue Slate */
+            --bg-color: #0f172a;
             --card-bg: #1e293b;
             --text-main: #f1f5f9;
             --text-sec: #94a3b8;
-            --accent: #38bdf8; /* Sky Blue */
-            --highlight: #818cf8; /* Indigo */
-            --success: #34d399;
-            --danger: #f87171;
+            --accent: #38bdf8;
+            --highlight: #818cf8;
             --border: #334155;
+            --card-height: 400px; /* Sedikit tinggi untuk muat info tambahan */
         }
 
         body {
@@ -49,10 +48,6 @@
             text-align: center;
             border: 1px solid var(--border);
             margin-bottom: 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
         }
 
         #time { font-size: 4rem; font-weight: 700; color: var(--accent); line-height: 1; letter-spacing: -1px; }
@@ -64,17 +59,15 @@
             border-radius: 16px;
             padding: 20px;
             border: 1px solid var(--border);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            height: 380px; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            height: var(--card-height); 
             display: flex;
             flex-direction: column;
-            position: relative;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s;
         }
 
         .card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
             border-color: var(--highlight);
         }
 
@@ -98,11 +91,8 @@
             padding-right: 5px;
         }
 
-        /* Scrollbar */
         .card-content::-webkit-scrollbar { width: 6px; }
-        .card-content::-webkit-scrollbar-track { background: transparent; }
         .card-content::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
-        .card-content::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
         /* --- List Items --- */
         ul { list-style: none; padding: 0; margin: 0; }
@@ -112,17 +102,20 @@
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start; /* Align top for multi-line details */
             gap: 15px;
         }
         li:last-child { border-bottom: none; }
 
         .info-col { display: flex; flex-direction: column; gap: 4px; flex: 1; }
-        .meta-col { text-align: right; display: flex; flex-direction: column; gap: 4px; align-items: flex-end; min-width: 80px;}
+        .meta-col { text-align: right; display: flex; flex-direction: column; gap: 6px; align-items: flex-end; min-width: 90px;}
 
-        .main-text { font-weight: 600; font-size: 0.95rem; color: #fff; }
-        .sub-text { font-size: 0.8rem; color: var(--text-sec); display: flex; align-items: center; gap: 6px; }
-        .sub-text i { font-size: 0.75rem; opacity: 0.8; }
+        .main-text { font-weight: 600; font-size: 1rem; color: #fff; }
+        .sub-text { font-size: 0.85rem; color: var(--text-sec); display: flex; align-items: center; gap: 6px; }
+        
+        /* Kelas Specific Detail */
+        .detail-row { font-size: 0.8rem; color: #cbd5e1; display: flex; gap: 10px; margin-top: 4px;}
+        .detail-item { display: flex; align-items: center; gap: 5px; background: #334155; padding: 2px 6px; border-radius: 4px;}
 
         .badge {
             font-size: 0.75rem;
@@ -133,18 +126,14 @@
         }
         .badge-time { background: rgba(56, 189, 248, 0.15); color: var(--accent); }
         .badge-date { background: rgba(148, 163, 184, 0.15); color: var(--text-sec); }
+        .badge-duration { background: rgba(129, 140, 248, 0.15); color: var(--highlight); border: 1px solid rgba(129, 140, 248, 0.3); }
 
-        /* --- Todo Specific --- */
-        .todo-done .main-text { text-decoration: line-through; opacity: 0.5; }
-        .status-dot { height: 8px; width: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
-
-        /* --- Quick Links Grid --- */
+        /* Quick Links Grid */
         .links-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 10px;
         }
-
         .link-btn {
             background-color: #283445;
             color: var(--text-main);
@@ -154,32 +143,17 @@
             text-align: center;
             font-size: 0.9rem;
             font-weight: 500;
-            border: 1px solid transparent;
             transition: all 0.2s;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             gap: 8px;
             height: 80px;
+            justify-content: center;
         }
+        .link-btn:hover { background-color: var(--highlight); color: #fff; }
 
-        .link-btn i { font-size: 1.2rem; color: var(--highlight); }
-
-        .link-btn:hover {
-            background-color: var(--highlight);
-            color: #fff;
-            border-color: var(--highlight);
-        }
-        .link-btn:hover i { color: #fff; }
-
-        .loading { text-align: center; color: var(--text-sec); padding-top: 60px; font-size: 0.9rem; }
-
-        /* Responsive Fixes */
-        @media (max-width: 600px) {
-            #time { font-size: 3rem; }
-            .container { grid-template-columns: 1fr; }
-        }
+        .loading { text-align: center; color: var(--text-sec); padding-top: 60px; }
     </style>
 </head>
 <body>
@@ -222,30 +196,27 @@
             <h2><i class="fa-solid fa-link"></i> Capaian Pantas</h2>
             <div class="card-content">
                 <div id="links-list" class="links-grid">
-                    <div class="loading" style="grid-column: 1/-1;">Memuatkan...</div>
+                    <div class="loading">Memuatkan...</div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // --- KONFIGURASI ---
-        const DATA_URL = "https://script.google.com/macros/s/AKfycbxg_RqRkZakGDh8LQms_sFnhryExnNdW3Fccyhk4ryksPYd_WX-WKqE_tV2j20P_1SJlQ/exec"; 
+        // --- GANTI URL DI SINI ---
+        const DATA_URL = https://script.google.com/macros/s/AKfycbxg_RqRkZakGDh8LQms_sFnhryExnNdW3Fccyhk4ryksPYd_WX-WKqE_tV2j20P_1SJlQ/exec; 
 
-        // 1. Clock Logic
+        // 1. Clock
         function updateTime() {
             const now = new Date();
             document.getElementById('time').textContent = now.toLocaleTimeString('en-US', { hour12: false });
-            
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            // Format tarikh bahasa melayu
-            const dateStr = now.toLocaleDateString('ms-MY', options);
-            document.getElementById('date').textContent = dateStr;
+            document.getElementById('date').textContent = now.toLocaleDateString('ms-MY', options);
         }
         setInterval(updateTime, 1000);
         updateTime();
 
-        // 2. Data Fetching
+        // 2. Fetch Data
         async function fetchData() {
             if(DATA_URL.includes("GANTI")) return;
             try {
@@ -257,16 +228,41 @@
             }
         }
 
-        // 3. Render Logic
+        // 3. Render
         function renderDashboard(data) {
             
-            // --- RENDER MEETING ---
-            // Input: Agenda, Tarikh, Masa, Lokasi
+            // --- KELAS (NEW LOGIC) ---
+            const kelasHTML = data.kelas.map(item => {
+                const dateObj = new Date(item.Tarikh);
+                const dateDisplay = isNaN(dateObj) ? item.Tarikh : `${dateObj.getDate()}/${dateObj.getMonth()+1}`;
+                const dayName = isNaN(dateObj) ? '' : dateObj.toLocaleDateString('ms-MY', { weekday: 'short' });
+                
+                // Kira Tempoh
+                const duration = calculateDuration(item.MasaMula, item.MasaTamat);
+
+                return `
+                <li>
+                    <div class="info-col">
+                        <span class="main-text">${item.Subjek}</span>
+                        <div class="detail-row">
+                             <span class="detail-item"><i class="fa-regular fa-clock"></i> ${formatTimeOnly(item.MasaMula)}</span>
+                             <span class="detail-item"><i class="fa-solid fa-location-dot"></i> ${item.Lokasi}</span>
+                        </div>
+                    </div>
+                    <div class="meta-col">
+                        <span class="badge badge-date">${dateDisplay} (${dayName})</span>
+                        <span class="badge badge-duration"><i class="fa-solid fa-hourglass-half"></i> ${duration}</span>
+                    </div>
+                </li>
+            `}).join('');
+            document.getElementById('kelas-list').innerHTML = `<ul>${kelasHTML}</ul>`;
+
+
+            // --- MEETING ---
             const meetingHTML = data.meeting.map(item => {
                 const dateObj = new Date(item.Tarikh);
-                const dayName = isNaN(dateObj) ? '' : dateObj.toLocaleDateString('ms-MY', { weekday: 'long' });
+                const dayName = isNaN(dateObj) ? '' : dateObj.toLocaleDateString('ms-MY', { weekday: 'short' });
                 const dateFormatted = isNaN(dateObj) ? item.Tarikh : `${dateObj.getDate()}/${dateObj.getMonth()+1}`;
-
                 return `
                 <li>
                     <div class="info-col">
@@ -281,65 +277,33 @@
             `}).join('');
             document.getElementById('meeting-list').innerHTML = `<ul>${meetingHTML}</ul>`;
 
-
-            // --- RENDER KELAS ---
-            // Input: Subjek, MasaMula, MasaTamat, Lokasi
-            const kelasHTML = data.kelas.map(item => `
-                <li>
-                    <div class="info-col">
-                        <span class="main-text">${item.Subjek}</span>
-                        <span class="sub-text"><i class="fa-solid fa-door-open"></i> ${item.Lokasi}</span>
-                    </div>
-                    <div class="meta-col">
-                        <span class="badge badge-time">
-                            ${formatTimeOnly(item.MasaMula)} - ${formatTimeOnly(item.MasaTamat)}
-                        </span>
-                    </div>
-                </li>
-            `).join('');
-            document.getElementById('kelas-list').innerHTML = `<ul>${kelasHTML}</ul>`;
-
-
-            // --- RENDER CUTI ---
-            // Input: NamaCuti, TarikhMula, TarikhTamat
+            // --- CUTI ---
             const cutiHTML = data.cuti.map(item => {
                 const start = formatDate(item.TarikhMula);
                 const end = formatDate(item.TarikhTamat);
                 const displayDate = (start === end) ? start : `${start} - ${end}`;
-
                 return `
                 <li>
-                    <div class="info-col">
-                        <span class="main-text">${item.NamaCuti}</span>
-                    </div>
-                    <div class="meta-col">
-                        <span class="badge badge-date">${displayDate}</span>
-                    </div>
+                    <div class="info-col"><span class="main-text">${item.NamaCuti}</span></div>
+                    <div class="meta-col"><span class="badge badge-date">${displayDate}</span></div>
                 </li>
             `}).join('');
             document.getElementById('cuti-list').innerHTML = `<ul>${cutiHTML}</ul>`;
 
-
-            // --- RENDER TODO ---
+            // --- TODO ---
             const todoHTML = data.todo.map(item => {
                 const isDone = item.Status === 'Done';
                 return `
-                <li class="${isDone ? 'todo-done' : ''}">
-                    <div class="info-col">
-                        <span class="main-text">${item.Tugasan}</span>
-                    </div>
+                <li style="opacity: ${isDone ? '0.6' : '1'}">
+                    <div class="info-col"><span class="main-text" style="${isDone ? 'text-decoration: line-through;' : ''}">${item.Tugasan}</span></div>
                     <div class="meta-col">
-                        <span class="badge" style="background: ${isDone ? 'rgba(52, 211, 153, 0.2)' : 'rgba(248, 113, 113, 0.2)'}; color: ${isDone ? '#34d399' : '#f87171'}">
-                            ${item.Status}
-                        </span>
+                        <span class="badge" style="background: ${isDone ? '#064e3b' : '#7f1d1d'}; color: ${isDone ? '#34d399' : '#f87171'}">${item.Status}</span>
                     </div>
                 </li>
             `}).join('');
             document.getElementById('todo-list').innerHTML = `<ul>${todoHTML}</ul>`;
 
-
-            // --- RENDER QUICK LINKS ---
-            // Input: Tajuk, URL
+            // --- LINKS ---
             const linksHTML = data.links.map(item => `
                 <a href="${item.URL}" target="_blank" class="link-btn">
                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
@@ -349,19 +313,35 @@
             document.getElementById('links-list').innerHTML = linksHTML;
         }
 
-        // --- Helper Functions ---
-        
-        // Convert "2023-10-25T02:00:00.000Z" to "10:00"
+        // --- Helpers ---
         function formatTimeOnly(val) {
             if(!val) return "";
             if(val.toString().includes("T") || val instanceof Date) {
-                const d = new Date(val);
-                return d.toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit', hour12: false});
+                return new Date(val).toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit', hour12: false});
             }
-            return val;
+            return val; // Jika user tulis manual text
         }
 
-        // Convert date to DD/MM
+        function calculateDuration(start, end) {
+            if(!start || !end) return "--";
+            
+            // Cuba parse sebagai Date object
+            const s = new Date(start);
+            const e = new Date(end);
+
+            if(isNaN(s) || isNaN(e)) return "Check Data"; // Error handling
+
+            const diffMs = e - s; // beza masa dalam milisaat
+            const diffMins = Math.floor(diffMs / 60000);
+            
+            const hours = Math.floor(diffMins / 60);
+            const mins = diffMins % 60;
+
+            if(hours > 0 && mins > 0) return `${hours}j ${mins}m`;
+            if(hours > 0) return `${hours} Jam`;
+            return `${mins} Minit`;
+        }
+
         function formatDate(val) {
             if(!val) return "";
             const d = new Date(val);
